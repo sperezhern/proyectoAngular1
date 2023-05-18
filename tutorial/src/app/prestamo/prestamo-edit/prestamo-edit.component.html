@@ -1,0 +1,63 @@
+<div class="container">
+    <h1 *ngIf="prestamo.id == null">Crear préstamo</h1>
+
+    <form>
+        <mat-form-field>
+            <mat-label>Identificador</mat-label>
+            <input type="text" matInput placeholder="Identificador" [(ngModel)]="prestamo.id" name="id" disabled>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Nombre cliente</mat-label>
+            <mat-select disableRipple [(ngModel)]="prestamo.client" name="client" required>
+                <mat-option *ngFor="let client of clients" [value]="client">{{client.name}}</mat-option>
+            </mat-select>
+            <mat-error>El nombre del cliente no puede estar vacío</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Nombre juego</mat-label>
+            <mat-select disableRipple [(ngModel)]="prestamo.game" name="game" required>
+                <mat-option *ngFor="let game of games" [value]="game">{{game.title}}</mat-option>
+            </mat-select>
+            <mat-error>El nombre del juego no puede estar vacío</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+
+            <label for="fechaInicio">Fecha de inicio:</label>
+
+            <input type="date" id="fechaInicio">            
+            <mat-error>La fecha de inicio no puede estar vacía </mat-error>
+
+            <mat-select  name="fechaInicio" required>
+                <mat-option input type="date"></mat-option>
+            </mat-select>
+
+            <mat-error>La fecha de inicio no puede estar vacía </mat-error>
+
+
+        </mat-form-field>
+
+        <mat-form-field>
+
+            <label for="fechaFin">Fecha de final:</label>
+
+            <input type="date" id="fechaFin">            
+            <mat-error>La fecha final no puede estar vacía </mat-error>
+
+            <mat-select  name="fechaFinal" required>
+                <mat-option input type="date"></mat-option>
+            </mat-select>
+
+            <mat-error>La fecha final no puede estar vacía </mat-error>
+
+
+        </mat-form-field>
+    </form>
+
+    <div class="buttons">
+        <button mat-stroked-button (click)="onClose()">Cerrar</button>
+        <button mat-flat-button color="primary" (click)="onSave()">Guardar</button>
+    </div>
+</div>
