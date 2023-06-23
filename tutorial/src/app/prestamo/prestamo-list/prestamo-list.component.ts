@@ -101,11 +101,24 @@ export class PrestamoListComponent implements OnInit {
   onSearch(): void {
 
     let title = this.filterTitle;
-    let categoryId = this.filterCategory != null ? this.filterCategory.id : null;
+    let clientId = this.filterClient != null ? this.filterClient.id : null;
 
-    this.gameService.getGames(title, categoryId).subscribe(
-        games => this.games = games
-    );
+    let pageable: Pageable = {
+      pageNumber: this.pageNumber,
+      pageSize: this.pageSize,
+      sort: [{
+        property: 'id',
+        direction: 'ASC'
+      }]
+    }
+
+    this.prestamoService.getPrestamos(pageable, title, clientId).subscribe(data => {
+      this.dataSource.data = data.content;
+      this.pageNumber = data.pageable.pageNumber;
+      this.pageSize = data.pageable.pageSize;
+      this.totalElements = data.totalElements;
+    });
+   
 }
 
   createPrestamo() {

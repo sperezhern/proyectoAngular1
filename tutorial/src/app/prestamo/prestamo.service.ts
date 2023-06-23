@@ -18,8 +18,8 @@ export class PrestamoService {
 
   ) { }
 
-  getPrestamos(pageable: Pageable): Observable<PrestamoPage> {
-    return this.http.post<PrestamoPage>('http://localhost:8080/prestamo', { pageable: pageable });
+  getPrestamos(pageable: Pageable, title?: String, clientId?: number): Observable<PrestamoPage> {
+    return this.http.post<PrestamoPage>(this.composeFindUrl(title, clientId), { pageable: pageable });
   }
 
   /*getPrestamos(title?: String, gameId?: number): Observable<Prestamo[]> {            
@@ -49,19 +49,19 @@ export class PrestamoService {
     return this.http.get<Prestamo[]>(this.composeFindUrl(title, clientId));
   }
 
-  private composeFindUrl(title?: String, categoryId?: number) : string {
+  private composeFindUrl(title?: String, clientId?: number) : string {
     let params = '';
 
     if (title != null) {
         params += 'title='+title;
     }
 
-    if (categoryId != null) {
+    if (clientId != null) {
         if (params != '') params += "&";
-        params += "idCategory="+categoryId;
+        params += "idClient="+clientId;
     }
 
-    let url = 'http://localhost:8080/game'
+    let url = 'http://localhost:8080/prestamo'
 
     if (params == '') return url;
     else return url + '?'+params;
